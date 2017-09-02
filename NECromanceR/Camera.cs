@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace NECromanceR {
     class Camera {
@@ -31,8 +25,11 @@ namespace NECromanceR {
             Viewport = new Vector2( width, height );
         }
 
-        public void LookAt ( Vector2 worldCoordinates ) {
-            Position = new Vector2( worldCoordinates.X - Viewport.X/2, worldCoordinates.Y - Viewport.Y/2 );
+        // After LookAt is called on something's position, camera's position can be used
+        // to calculate screen coordinates by subtracting it from an entity's position.
+        public Vector2 LookAt ( Vector2 worldCoordinates ) {
+            Position = new Vector2( worldCoordinates.X - Viewport.X / 2, worldCoordinates.Y - Viewport.Y / 2 );
+            return Position;
         }
 
     }

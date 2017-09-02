@@ -76,7 +76,6 @@ namespace NECromanceR {
         public void Draw ( SpriteBatch spriteBatch, Vector2 position ) {
             spriteBatch.Draw( spriteSheet, new Rectangle( ( int ) position.X, ( int ) position.Y, ( int ) ( FrameWidth * scale ), ( int ) ( FrameHeight * scale ) ),
                 new Rectangle( currentFrame * FrameWidth, 0, FrameWidth, FrameHeight ), tint );
-            Console.WriteLine( position.X + " " + ( int ) ( position.X + FrameWidth * scale ) );
         }
 
     }

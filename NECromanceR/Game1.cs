@@ -23,7 +23,7 @@ namespace NECromanceR {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-
+            
             base.Initialize();
         }
 
@@ -68,6 +68,9 @@ namespace NECromanceR {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
+            spriteBatch.Begin();
+            //player start drawing
+            spriteBatch.End();
 
             base.Draw(gameTime);
         }

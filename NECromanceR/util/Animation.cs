@@ -19,6 +19,7 @@ namespace NECromanceR.util {
         float scale;
         private Color tint;
         private int frameDuration;
+        private int elapsedTime;
         public bool Loops;
         public bool Active;
 
@@ -49,9 +50,21 @@ namespace NECromanceR.util {
             this.currentFrame = startFrame;
         }
 
-        public void Update() {
-            if (Active) {
+        public void Update(GameTime gameTime) {
+            if (!Active) {
+                return;
+            }
+            elapsedTime += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (elapsedTime > frameDuration) {
+                currentFrame++;
+                if (currentFrame > endFrame) {
+                    currentFrame = startFrame;
+                    if (!Loops) {
+                        Active = false;
+                    }
+                }
 
+                elapsedTime = 0;
             }
         }
 

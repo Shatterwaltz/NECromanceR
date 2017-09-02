@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace NECromanceR {
     class Player {
+
         //Player spritesheet
         private Texture2D spriteSheet;
         //Track keyboard
@@ -37,7 +38,6 @@ namespace NECromanceR {
             animations["Right"].Initialize(spriteSheet, 3, 4, 32, 32, 30, 1f, true, true, Color.White);
             animations["Up"].Initialize(spriteSheet, 1, 2, 32, 32, 30, 1f, true, true, Color.White);
             animations["Down"].Initialize(spriteSheet, 5, 6, 32, 32, 30, 1f, true, true, Color.White);
-            
         }
 
         public void Update(GameTime gameTime) {
@@ -74,7 +74,7 @@ namespace NECromanceR {
             if(velocity.Y == 0 && velocity.X == 0) {
                 currentAnimation = animations["Idle"];
             }
-
+            
             currentAnimation.Update(gameTime);
         }
 

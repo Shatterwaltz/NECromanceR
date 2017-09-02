@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 
 namespace NECromanceR {
     class Camera {
 
-        private Vector2 Position { get { return Position; } set { Position = value; } }
-        private Vector2 Viewport { get { return Viewport; } set { Viewport = value; } }
+        public Vector2 Position;
+        private Vector2 Viewport;
 
         public Camera ( Vector2 position, Vector2 viewport ) {
             this.Position = position;
@@ -27,8 +21,9 @@ namespace NECromanceR {
             this.Viewport = new Vector2( width, height );
         }
 
-        public void LookAt ( Vector2 worldCoordinates ) {
+        public Vector2 LookAt ( Vector2 worldCoordinates ) {
             Position = new Vector2( worldCoordinates.X - Viewport.X/2, worldCoordinates.Y - Viewport.Y/2 );
+            return Position;
         }
 
     }

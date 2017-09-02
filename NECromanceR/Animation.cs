@@ -16,7 +16,7 @@ namespace NECromanceR {
         private int currentFrame;
         public int FrameHeight;
         public int FrameWidth;
-        float scale;
+        private float scale;
         private Color tint;
         private int frameDuration;
         private int elapsedTime;

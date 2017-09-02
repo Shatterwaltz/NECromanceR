@@ -9,6 +9,7 @@ namespace NECromanceR {
     public class Game1 : Game {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        
 
         public Game1() {
             graphics = new GraphicsDeviceManager(this);
@@ -23,7 +24,6 @@ namespace NECromanceR {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            
             base.Initialize();
         }
 
@@ -34,7 +34,6 @@ namespace NECromanceR {
         protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
             // TODO: use this.Content to load your game content here
         }
 
@@ -69,7 +68,7 @@ namespace NECromanceR {
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            //player start drawing
+
             spriteBatch.End();
 
             base.Draw(gameTime);

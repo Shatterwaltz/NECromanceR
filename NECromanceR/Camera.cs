@@ -7,21 +7,21 @@ namespace NECromanceR {
            behind the scenes, the compiler is generating
            two fields called 'position' and 'viewport' and 
            getters and setters for both. */
-        private Vector2 Position { get; set; }
+        public Vector2 Position { get; set; }
         private Vector2 Viewport { get; set; }
 
         public Camera ( Vector2 position, Vector2 viewport ) {
-            Position = position;
+            LookAt(position);
             Viewport = viewport;
         }
 
         public Camera ( int x, int y, Vector2 viewport ) {
-            Position = new Vector2( x, y );
+            LookAt(new Vector2( x, y ));
             this.Viewport = viewport;
         }
 
         public Camera ( int x, int y, int width, int height ) {
-            Position = new Vector2( x, y );
+            LookAt(new Vector2( x, y ));
             Viewport = new Vector2( width, height );
         }
 

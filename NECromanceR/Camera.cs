@@ -7,8 +7,15 @@ namespace NECromanceR {
            behind the scenes, the compiler is generating
            two fields called 'position' and 'viewport' and 
            getters and setters for both. */
-        public Vector2 Position { get; set; }
-        private Vector2 Viewport { get; set; }
+        private Vector2 position;
+        public Vector2 Position {
+            get { return position; }
+            set {
+                position = value;
+                LookAt( position );
+            }
+        }
+        public Vector2 Viewport { get; set; }
 
         public Camera ( Vector2 position, Vector2 viewport ) {
             LookAt(position);

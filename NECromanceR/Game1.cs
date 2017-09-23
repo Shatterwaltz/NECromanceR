@@ -8,9 +8,10 @@ namespace NECromanceR {
     /// </summary>
     public class Game1 : Game {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
-
+        CulledSpriteBatch spriteBatch;
+        Camera camera;
         Player player;
+
         public Game1 () {
             graphics = new GraphicsDeviceManager( this );
             Content.RootDirectory = "Content";
@@ -24,6 +25,7 @@ namespace NECromanceR {
         /// </summary>
         protected override void Initialize () {
             // TODO: Add your initialization logic here
+            camera = new Camera(Vector2.Zero, new Vector2(GraphicsDevice.Viewport.Width/2, GraphicsDevice.Viewport.Height));
             player = new Player();
             base.Initialize();
         }
@@ -34,8 +36,8 @@ namespace NECromanceR {
         /// </summary>
         protected override void LoadContent () {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch( GraphicsDevice );
-            player.Initialize(Content.Load<Texture2D>("MovePlaceholder"));
+            spriteBatch = new CulledSpriteBatch( GraphicsDevice );
+            player.Initialize(Content.Load<Texture2D>("MovePlaceholder"), camera);
             // TODO: use this.Content to load your game content here
         }
 

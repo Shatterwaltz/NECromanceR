@@ -80,9 +80,9 @@ namespace NECromanceR {
         /// </summary>
         /// <param name="spriteBatch">Spritebatch to use</param>
         /// <param name="position">Coordinates to draw sprite at, from top left corner</param>
-        public void Draw ( SpriteBatch spriteBatch, Vector2 position ) {
+        public void Draw (CulledSpriteBatch spriteBatch, Vector2 position , Camera camera) {
             spriteBatch.Draw( spriteSheet, new Rectangle( ( int ) position.X, ( int ) position.Y, ( int ) ( FrameWidth * scale ), ( int ) ( FrameHeight * scale ) ),
-                new Rectangle( currentFrame * FrameWidth, 0, FrameWidth, FrameHeight ), tint );
+                new Rectangle( currentFrame * FrameWidth, 0, FrameWidth, FrameHeight ), camera, tint );
         }
 
     }

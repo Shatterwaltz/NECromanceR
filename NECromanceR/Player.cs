@@ -6,7 +6,7 @@ using Microsoft.Xna.Framework;
 
 namespace NECromanceR {
     class Player {
-
+        private Camera camera;
         //Player spritesheet
         private Texture2D spriteSheet;
         //Track keyboard
@@ -23,7 +23,8 @@ namespace NECromanceR {
         //Currently playing animation 
         private Animation currentAnimation;
 
-        public void Initialize(Texture2D spriteSheet) {
+        public void Initialize(Texture2D spriteSheet, Camera camera) {
+            this.camera = camera;
             this.spriteSheet = spriteSheet;
 
             speed = 5f;
@@ -133,8 +134,8 @@ namespace NECromanceR {
             currentAnimation.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch) {
-            currentAnimation.Draw(spriteBatch, Position);
+        public void Draw(CulledSpriteBatch spriteBatch) {
+            currentAnimation.Draw(spriteBatch, Position, camera);
         }
 
     }

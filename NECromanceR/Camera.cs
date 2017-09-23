@@ -12,7 +12,7 @@ namespace NECromanceR {
             get { return position; }
             set {
                 position = value;
-                LookAt( position );
+                LookAt( Position );
             }
         }
         public Vector2 Viewport { get; set; }
@@ -35,7 +35,7 @@ namespace NECromanceR {
         // After LookAt is called on something's position, camera's position can be used
         // to calculate screen coordinates by subtracting it from an entity's position.
         public Vector2 LookAt ( Vector2 worldCoordinates ) {
-            Position = new Vector2( worldCoordinates.X - Viewport.X / 2, worldCoordinates.Y - Viewport.Y / 2 );
+            position = new Vector2( worldCoordinates.X - Viewport.X / 2, worldCoordinates.Y - Viewport.Y / 2 );
             return Position;
         }
 

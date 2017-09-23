@@ -25,7 +25,7 @@ namespace NECromanceR {
         /// </summary>
         protected override void Initialize () {
             // TODO: Add your initialization logic here
-            camera = new Camera(Vector2.Zero, new Vector2(GraphicsDevice.Viewport.Width/2, GraphicsDevice.Viewport.Height));
+            camera = new Camera(Vector2.Zero, new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
             player = new Player();
             base.Initialize();
         }

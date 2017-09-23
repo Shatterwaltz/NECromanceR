@@ -36,7 +36,8 @@ namespace NECromanceR {
         /// <param name="loops">Flag determining if animation should loop</param>
         /// <param name="active">Flag determining if animation should be playing or not. </param>
         /// <param name="tint">Color to apply to animation. </param>
-        public void Initialize ( Texture2D spriteSheet, int startFrame, int endFrame, int frameHeight, int frameWidth, int frameDuration, float scale, bool loops, Color tint ) {
+        public void Initialize ( Texture2D spriteSheet, int startFrame, int endFrame, int frameHeight, int frameWidth, int frameDuration, 
+            float scale, bool loops, Color tint) {
             this.spriteSheet = spriteSheet;
             this.startFrame = startFrame;
             this.endFrame = endFrame;

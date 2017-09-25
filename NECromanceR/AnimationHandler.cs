@@ -39,8 +39,8 @@ namespace NECromanceR {
         /// <param name="active">Flag determining if animation should be playing or not. </param>
         /// <param name="tint">Color to apply to animation. </param>
         /// <param name="followupAnimation">Animation to play after the current one finishes</param>
-        public void AddAnimation(String name, Texture2D spriteSheet, int startFrame, int endFrame, int frameHeight, int frameWidth, 
-            int frameDuration, float scale = 1f, bool loops = true, int priority = 0, String followupAnimation=null) {
+        public void AddAnimation(String name, Texture2D spriteSheet, int startFrame, int endFrame, int frameHeight, int frameWidth,
+            int frameDuration, float scale = 1f, bool loops = true, int priority = 0, String followupAnimation = null) {
             Animation anim = new Animation();
             anim.Initialize(spriteSheet, startFrame, endFrame, frameHeight, frameWidth, frameDuration, scale, loops, Color.White);
             animations.Add(name, new Tuple<Animation, int, String>(anim, priority, followupAnimation));
@@ -53,7 +53,7 @@ namespace NECromanceR {
         /// <returns>True when animation successfully queued, false if current animation is uninterruptible and underway. </returns>
         public bool PlayAnimation(String animationName) {
             //If animation is higher priority, or current one is inactive, allow a new animation to be played
-            if(animations[animationName].Item2>=animations[CurrentAnimation].Item2 || !animations[CurrentAnimation].Item1.Active) {
+            if(animations[animationName].Item2 >= animations[CurrentAnimation].Item2 || !animations[CurrentAnimation].Item1.Active) {
                 if(CurrentAnimation != animationName) {
                     animations[CurrentAnimation].Item1.Restart();
                 }
@@ -75,8 +75,8 @@ namespace NECromanceR {
             animations[CurrentAnimation].Item1.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 position) {
-            animations[CurrentAnimation].Item1.Draw(spriteBatch, position);
+        public void Draw(CulledSpriteBatch spriteBatch, Vector2 position, Camera camera) {
+            animations[CurrentAnimation].Item1.Draw(spriteBatch, position, camera);
         }
     }
 }

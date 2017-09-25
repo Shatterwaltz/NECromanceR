@@ -36,7 +36,7 @@ namespace NECromanceR {
         /// <param name="loops">Flag determining if animation should loop</param>
         /// <param name="active">Flag determining if animation should be playing or not. </param>
         /// <param name="tint">Color to apply to animation. </param>
-        public void Initialize ( Texture2D spriteSheet, int startFrame, int endFrame, int frameHeight, int frameWidth, int frameDuration, 
+        public void Initialize(Texture2D spriteSheet, int startFrame, int endFrame, int frameHeight, int frameWidth, int frameDuration,
             float scale, bool loops, Color tint) {
             this.spriteSheet = spriteSheet;
             this.startFrame = startFrame;
@@ -51,16 +51,16 @@ namespace NECromanceR {
             this.currentFrame = startFrame;
         }
 
-        public void Update ( GameTime gameTime ) {
-            if ( !Active ) {
+        public void Update(GameTime gameTime) {
+            if(!Active) {
                 return;
             }
-            elapsedTime += ( int ) gameTime.ElapsedGameTime.TotalMilliseconds;
-            if ( elapsedTime > frameDuration ) {
+            elapsedTime += (int)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if(elapsedTime > frameDuration) {
                 currentFrame++;
-                if ( currentFrame > endFrame ) {
+                if(currentFrame > endFrame) {
                     currentFrame = startFrame;
-                    if ( !Loops ) {
+                    if(!Loops) {
                         Active = false;
                     }
                 }
@@ -81,9 +81,9 @@ namespace NECromanceR {
         /// </summary>
         /// <param name="spriteBatch">Spritebatch to use</param>
         /// <param name="position">Coordinates to draw sprite at, from top left corner</param>
-        public void Draw ( SpriteBatch spriteBatch, Vector2 position ) {
-            spriteBatch.Draw( spriteSheet, new Rectangle( ( int ) position.X, ( int ) position.Y, ( int ) ( FrameWidth * scale ), ( int ) ( FrameHeight * scale ) ),
-                new Rectangle( currentFrame * FrameWidth, 0, FrameWidth, FrameHeight ), tint );
+        public void Draw(CulledSpriteBatch spriteBatch, Vector2 position, Camera camera) {
+            spriteBatch.DrawByCamera(spriteSheet, new Rectangle((int)position.X, (int)position.Y, (int)(FrameWidth * scale), (int)(FrameHeight * scale)),
+                new Rectangle(currentFrame * FrameWidth, 0, FrameWidth, FrameHeight), camera, tint);
         }
 
     }

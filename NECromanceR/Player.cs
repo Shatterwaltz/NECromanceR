@@ -18,10 +18,11 @@ namespace NECromanceR {
         //Player's position in world coordinates
         public Vector2 Position;
         private AnimationHandler animationHandler;
+        private Camera camera;
 
-        public void Initialize(Texture2D spriteSheet) {
+        public void Initialize(Texture2D spriteSheet, Camera camera) {
             this.spriteSheet = spriteSheet;
-
+            this.camera = camera;
             speed = 5f;
 
             //Set properties of each animation
@@ -53,13 +54,13 @@ namespace NECromanceR {
             if(currentKeyState.IsKeyDown(Keys.D)) {
                 velocity.X += speed;
             }
-            if(currentKeyState.IsKeyDown(Keys.W)){
+            if(currentKeyState.IsKeyDown(Keys.W)) {
                 velocity.Y -= speed;
             }
             if(currentKeyState.IsKeyDown(Keys.S)) {
                 velocity.Y += speed;
             }
-            
+
             //If an attack key is pressed, set state to attacking and queue correct attack animation
             if(currentKeyState.IsKeyDown(Keys.Down)) {
                 animationHandler.PlayAnimation("AttackDown");
@@ -99,8 +100,8 @@ namespace NECromanceR {
             animationHandler.Update(gameTime);
         }
 
-        public void Draw(SpriteBatch spriteBatch) {
-            animationHandler.Draw(spriteBatch, Position);
+        public void Draw(CulledSpriteBatch spriteBatch) {
+            animationHandler.Draw(spriteBatch, Position, camera);
         }
 
     }

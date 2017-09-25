@@ -1,18 +1,20 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System; 
+using System;
 namespace NECromanceR {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
-    public class Game1 : Game {
+    public class Game1: Game {
         GraphicsDeviceManager graphics;
         CulledSpriteBatch spriteBatch;
         Camera camera;
 
-        public Game1 () {
-            graphics = new GraphicsDeviceManager( this );
+        Player player = new Player();
+
+        public Game1() {
+            graphics = new GraphicsDeviceManager(this);
             //default res to 640x480
             graphics.PreferredBackBufferWidth = 640;
             graphics.PreferredBackBufferHeight = 480;
@@ -25,9 +27,10 @@ namespace NECromanceR {
         /// related content.  Calling base.Initialize will enumerate through any components
         /// and initialize them as well.
         /// </summary>
-        protected override void Initialize () {
+        protected override void Initialize() {
             // TODO: Add your initialization logic here
             camera = new Camera(Vector2.Zero, new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
+            player.Initialize(Content.Load<Texture2D>("MovePlaceholder"), camera);
             base.Initialize();
         }
 
@@ -35,9 +38,9 @@ namespace NECromanceR {
         /// LoadContent will be called once per game and is the place to load
         /// all of your content.
         /// </summary>
-        protected override void LoadContent () {
+        protected override void LoadContent() {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new CulledSpriteBatch( GraphicsDevice );
+            spriteBatch = new CulledSpriteBatch(GraphicsDevice);
             // TODO: use this.Content to load your game content here
         }
 
@@ -45,7 +48,7 @@ namespace NECromanceR {
         /// UnloadContent will be called once per game and is the place to unload
         /// game-specific content.
         /// </summary>
-        protected override void UnloadContent () {
+        protected override void UnloadContent() {
             // TODO: Unload any non ContentManager content here
         }
 
@@ -54,25 +57,27 @@ namespace NECromanceR {
         /// checking for collisions, gathering input, and playing audio.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Update ( GameTime gameTime ) {
-            if ( GamePad.GetState( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown( Keys.Escape ) )
+        protected override void Update(GameTime gameTime) {
+            if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            player.Update(gameTime);
             // TODO: Add your update logic here
-            base.Update( gameTime );
+            base.Update(gameTime);
         }
 
         /// <summary>
         /// This is called when the game should draw itself.
         /// </summary>
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
-        protected override void Draw ( GameTime gameTime ) {
-            GraphicsDevice.Clear( Color.CornflowerBlue );
+        protected override void Draw(GameTime gameTime) {
+            GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
+            player.Draw(spriteBatch);
             spriteBatch.End();
 
-            base.Draw( gameTime );
+            base.Draw(gameTime);
         }
     }
 }

@@ -31,14 +31,14 @@ namespace NECromanceR {
             animationHandler.AddAnimation("Right", spriteSheet, 3, 4, 32, 32, 500, 1f, true);
             animationHandler.AddAnimation("Up", spriteSheet, 1, 2, 32, 32, 500, 1f, true);
             animationHandler.AddAnimation("Down", spriteSheet, 5, 6, 32, 32, 500, 1f, true);
-            animationHandler.AddAnimation("AttackDown", spriteSheet, 15, 15, 32, 32, 600, 1f, false, 1, "Idle");
-            animationHandler.AddAnimation("AttackUp", spriteSheet, 13, 13, 32, 32, 600, 1f, false, 1, "Idle");
-            animationHandler.AddAnimation("AttackLeft", spriteSheet, 16, 16, 32, 32, 600, 1f, false, 1, "Idle");
-            animationHandler.AddAnimation("AttackRight", spriteSheet, 14, 14, 32, 32, 600, 1f, false, 1, "Idle");
-            animationHandler.AddAnimation("HurtDown", spriteSheet, 11, 11, 32, 32, 600, 1f, false, 2, "Idle");
-            animationHandler.AddAnimation("HurtUp", spriteSheet, 9, 9, 32, 32, 600, 1f, false, 2, "Idle");
-            animationHandler.AddAnimation("HurtLeft", spriteSheet, 12, 12, 32, 32, 600, 1f, false, 2, "Idle");
-            animationHandler.AddAnimation("HurtRight", spriteSheet, 10, 10, 32, 32, 600, 1f, false, 2, "Idle");
+            animationHandler.AddAnimation("AttackDown", spriteSheet, 15, 15, 32, 32, 600, 1f, false, 1, false, "Idle");
+            animationHandler.AddAnimation("AttackUp", spriteSheet, 13, 13, 32, 32, 600, 1f, false, 1, false, "Idle");
+            animationHandler.AddAnimation("AttackLeft", spriteSheet, 16, 16, 32, 32, 600, 1f, false, 1, false, "Idle");
+            animationHandler.AddAnimation("AttackRight", spriteSheet, 14, 14, 32, 32, 600, 1f, false, 1, false, "Idle");
+            animationHandler.AddAnimation("HurtDown", spriteSheet, 11, 11, 32, 32, 300, 1f, false, 2, false, "Idle");
+            animationHandler.AddAnimation("HurtUp", spriteSheet, 9, 9, 32, 32, 300, 1f, false, 2, false, "Idle");
+            animationHandler.AddAnimation("HurtLeft", spriteSheet, 12, 12, 32, 32, 300, 1f, false, 2, false, "Idle");
+            animationHandler.AddAnimation("HurtRight", spriteSheet, 10, 10, 32, 32, 300, 1f, false, 2, false, "Idle");
         }
 
         public void Update(GameTime gameTime) {
@@ -73,9 +73,9 @@ namespace NECromanceR {
             }
 
             //Halt player movement during attack animation
-            /*if(animationHandler.CurrentAnimation) {
+            if(animationHandler.CurrentAnimation.Name.Contains("Attack") || animationHandler.CurrentAnimation.Name.Contains("Hurt")) {
                 velocity = Vector2.Zero;
-            }*/
+            }
 
             //Set movement animation based on velocity
             if(velocity.Y < 0) {
@@ -90,7 +90,7 @@ namespace NECromanceR {
 
             //If not attacking or in motion, idle. 
             if(velocity.Y == 0 && velocity.X == 0) {
-                animationHandler.PlayAnimation("Idle");
+               animationHandler.PlayAnimation("Idle");
             }
 
             //Update player position

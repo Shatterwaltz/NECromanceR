@@ -12,38 +12,38 @@ namespace NECromanceR {
         //the relevant animation
         //A int indicating the priority of that animation
         //What animation should be played following the end of that animation
-        private Dictionary<string, Tuple<Animation, int, String>> animations = new Dictionary<string, Tuple<Animation, int, String>>();
-        public String CurrentAnimation;
-
-        public AnimationHandler(String name, Texture2D spriteSheet, int startFrame, int endFrame, int frameHeight, int frameWidth,
-            int frameDuration, float scale = 1f, bool loops = true, int priority = 0, String followupAnimation = null) {
+        private Dictionary<string, AnimationInfo> animations = new Dictionary<string, AnimationInfo>();
+        public AnimationInfo CurrentAnimation { get; private set; }
+        
+        public AnimationHandler(string name, Texture2D spriteSheet, int startFrame, int endFrame, int frameHeight, int frameWidth,
+            int frameDuration, float scale = 1f, bool loops = true, int priority = 0, bool cancelBySamePriority=true, string followupAnimation = null) {
             Animation anim = new Animation();
             anim.Initialize(spriteSheet, startFrame, endFrame, frameHeight, frameWidth, frameDuration, scale, loops, Color.White);
-            animations.Add(name, new Tuple<Animation, int, String>(anim, priority, followupAnimation));
+            animations.Add(name, new AnimationInfo(name, anim, priority, cancelBySamePriority, followupAnimation));
 
-            CurrentAnimation = name;
+            CurrentAnimation = animations[name];
         }
 
         /// <summary>
         /// Adds an Animation object to the handler.
         /// </summary>
+        /// <param name="name">Name of this animation</param>
         /// <param name="spriteSheet">Horizontal strip containing each frame for this animation.</param>
         /// <param name="startFrame">First frame of the animation. Zero-indexed.</param>
         /// <param name="endFrame">Last frame of the animation. Zero-indexed.</param>
         /// <param name="frameHeight">Height of a single frame.</param>
         /// <param name="frameWidth">Width of a single frame. </param>
         /// <param name="frameDuration">How long each frame should be displayed in ms. </param>
-        /// <param name="priority">A currently playing animation cannot be interupted by a lower priority animation </param>
         /// <param name="scale">Multiplicatively scale the height/width of the frame. </param>
         /// <param name="loops">Flag determining if animation should loop</param>
-        /// <param name="active">Flag determining if animation should be playing or not. </param>
-        /// <param name="tint">Color to apply to animation. </param>
+        /// <param name="priority">A currently playing animation cannot be interupted by a lower priority animation </param>
+        /// <param name="cancelBySamePriority">Determines if this animation can be cancelled by other animations of the same priority</param>
         /// <param name="followupAnimation">Animation to play after the current one finishes</param>
-        public void AddAnimation(String name, Texture2D spriteSheet, int startFrame, int endFrame, int frameHeight, int frameWidth,
-            int frameDuration, float scale = 1f, bool loops = true, int priority = 0, String followupAnimation = null) {
+        public void AddAnimation(string name, Texture2D spriteSheet, int startFrame, int endFrame, int frameHeight, int frameWidth,
+            int frameDuration, float scale = 1f, bool loops = true, int priority = 0, bool cancelBySamePriority = true, string followupAnimation = null) {
             Animation anim = new Animation();
             anim.Initialize(spriteSheet, startFrame, endFrame, frameHeight, frameWidth, frameDuration, scale, loops, Color.White);
-            animations.Add(name, new Tuple<Animation, int, String>(anim, priority, followupAnimation));
+            animations.Add(name, new AnimationInfo(name, anim, priority, cancelBySamePriority, followupAnimation));
         }
 
         /// <summary>
@@ -52,31 +52,57 @@ namespace NECromanceR {
         /// <param name="animationName">Name of animation to play</param>
         /// <returns>True when animation successfully queued, false if current animation is uninterruptible and underway. </returns>
         public bool PlayAnimation(String animationName) {
-            //If animation is higher priority, or current one is inactive, allow a new animation to be played
-            if(animations[animationName].Item2 >= animations[CurrentAnimation].Item2 || !animations[CurrentAnimation].Item1.Active) {
-                if(CurrentAnimation != animationName) {
-                    animations[CurrentAnimation].Item1.Restart();
+            return PlayAnimation(animations[animationName]);
+        }
+
+
+        public bool PlayAnimation(AnimationInfo animation) {
+            //If animation is higher priority, or current one is inactive, or current animation allows cancelling by same priority animations, allow a new animation to be played
+            if(animation.Priority > CurrentAnimation.Priority || !CurrentAnimation.Animation.Active || 
+                (CurrentAnimation.Priority==animation.Priority && CurrentAnimation.CancelBySamePriority==true)) {
+                if(CurrentAnimation != animation) {
+                    CurrentAnimation.Animation.Restart();
                 }
-                CurrentAnimation = animationName;
+                CurrentAnimation = animation;
                 return true;
             } else {
                 return false;
             }
         }
 
-        public bool IsPlaying() {
-            return animations[CurrentAnimation].Item1.Active;
-        }
-
         public void Update(GameTime gameTime) {
-            if(!animations[CurrentAnimation].Item1.Active && animations[CurrentAnimation].Item3 != null) {
-                CurrentAnimation = animations[CurrentAnimation].Item3;
+            if(!CurrentAnimation.Animation.Active && CurrentAnimation.FollowupAnimation != null) {
+                PlayAnimation(animations[CurrentAnimation.FollowupAnimation]);
             }
-            animations[CurrentAnimation].Item1.Update(gameTime);
+            CurrentAnimation.Animation.Update(gameTime);
         }
 
         public void Draw(CulledSpriteBatch spriteBatch, Vector2 position, Camera camera) {
-            animations[CurrentAnimation].Item1.Draw(spriteBatch, position, camera);
+            CurrentAnimation.Animation.Draw(spriteBatch, position, camera);
+        }
+    }
+
+    struct AnimationInfo{
+        public string Name { get; set; }
+        public Animation Animation { get; set; }
+        public int Priority { get; set; }
+        public string FollowupAnimation { get; set; }
+        public bool CancelBySamePriority { get; set; }
+
+        public AnimationInfo(string name, Animation animation, int priority=0, bool cancelBySamePriority=true, string followupAnimation = null) {
+            Name = name;
+            Animation = animation;
+            Priority = priority;
+            CancelBySamePriority = cancelBySamePriority;
+            FollowupAnimation = followupAnimation;
+        }
+
+        public static bool operator ==(AnimationInfo a1, AnimationInfo a2) {
+            return a1.Equals(a2);
+        }
+
+        public static bool operator !=(AnimationInfo a1, AnimationInfo a2) {
+            return !a1.Equals(a2);
         }
     }
 }

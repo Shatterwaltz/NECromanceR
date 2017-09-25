@@ -13,18 +13,19 @@ namespace NECromanceR {
         public Vector2 Viewport { get; set; }
 
         public Camera(Vector2 position, Vector2 viewport) {
-            Position = position;
             Viewport = viewport;
+            Position = position;
+
         }
 
         public Camera(int x, int y, Vector2 viewport) {
-            Position = position;
             this.Viewport = viewport;
+            Position = position;
         }
 
         public Camera(int x, int y, int width, int height) {
-            Position = position;
             Viewport = new Vector2(width, height);
+            Position = position;
         }
 
     }

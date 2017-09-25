@@ -1,18 +1,21 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-
+using System; 
 namespace NECromanceR {
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
     public class Game1 : Game {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+        CulledSpriteBatch spriteBatch;
+        Camera camera;
 
-        Player player;
         public Game1 () {
             graphics = new GraphicsDeviceManager( this );
+            //default res to 640x480
+            graphics.PreferredBackBufferWidth = 640;
+            graphics.PreferredBackBufferHeight = 480;
             Content.RootDirectory = "Content";
         }
 
@@ -24,7 +27,7 @@ namespace NECromanceR {
         /// </summary>
         protected override void Initialize () {
             // TODO: Add your initialization logic here
-            player = new Player();
+            camera = new Camera(Vector2.Zero, new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
             base.Initialize();
         }
 
@@ -34,8 +37,7 @@ namespace NECromanceR {
         /// </summary>
         protected override void LoadContent () {
             // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch( GraphicsDevice );
-            player.Initialize(Content.Load<Texture2D>("MovePlaceholder"));
+            spriteBatch = new CulledSpriteBatch( GraphicsDevice );
             // TODO: use this.Content to load your game content here
         }
 
@@ -55,9 +57,7 @@ namespace NECromanceR {
         protected override void Update ( GameTime gameTime ) {
             if ( GamePad.GetState( PlayerIndex.One ).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown( Keys.Escape ) )
                 Exit();
-            player.Update(gameTime);
             // TODO: Add your update logic here
-
             base.Update( gameTime );
         }
 
@@ -70,7 +70,6 @@ namespace NECromanceR {
 
             // TODO: Add your drawing code here
             spriteBatch.Begin();
-            player.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw( gameTime );

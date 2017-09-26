@@ -72,23 +72,23 @@ namespace NECromanceR {
                 animationHandler.PlayAnimation("AttackRight");
             }
 
-            //Halt player movement during attack animation
+            //Halt player movement during attacking or receiving damage animations
             if(animationHandler.CurrentAnimation.Name.Contains("Attack") || animationHandler.CurrentAnimation.Name.Contains("Hurt")) {
                 velocity = Vector2.Zero;
             }
 
             //Set movement animation based on velocity
-            if(velocity.Y < 0) {
-                animationHandler.PlayAnimation("Up");
-            } else if(velocity.Y > 0) {
-                animationHandler.PlayAnimation("Down");
+            if(velocity.X < 0) {
+                animationHandler.PlayAnimation("Left");
             } else if(velocity.X > 0) {
                 animationHandler.PlayAnimation("Right");
-            } else if(velocity.X < 0) {
-                animationHandler.PlayAnimation("Left");
+            } else if(velocity.Y > 0) {
+                animationHandler.PlayAnimation("Down");
+            } else if(velocity.Y < 0) {
+                animationHandler.PlayAnimation("Up");
             }
 
-            //If not attacking or in motion, idle. 
+            //If not motion, attempt to play idle animation. 
             if(velocity.Y == 0 && velocity.X == 0) {
                animationHandler.PlayAnimation("Idle");
             }

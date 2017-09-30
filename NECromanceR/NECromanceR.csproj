@@ -45,7 +45,11 @@
     <Compile Include="Camera.cs" />
     <Compile Include="CulledSpriteBatch.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Handler.cs" />
+    <Compile Include="HandlerFactory.cs" />
+    <Compile Include="HandlerType.cs" />
     <Compile Include="Hitbox.cs" />
+    <Compile Include="HitboxHandler.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

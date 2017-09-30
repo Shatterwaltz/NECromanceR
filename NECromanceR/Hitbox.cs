@@ -7,11 +7,16 @@ using Microsoft.Xna.Framework;
 
 
 namespace NECromanceR {
-    class Hitbox {
+    public class Hitbox {
         public Rectangle HitboxRect { get; set; }
 
         public Hitbox(Rectangle hitboxRect) {
             HitboxRect = hitboxRect;
+        }
+
+        public override string ToString () {
+            return string.Format( "[Hitbox: (X: {0}) (Y: {1}) (Width: {2}) (Height: {3})]", 
+                                  HitboxRect.X, HitboxRect.Y, HitboxRect.Width, HitboxRect.Height );
         }
     }
 }

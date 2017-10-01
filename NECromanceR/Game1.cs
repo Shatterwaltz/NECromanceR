@@ -30,7 +30,7 @@ namespace NECromanceR {
         protected override void Initialize() {
             // TODO: Add your initialization logic here
             hitboxHandler = HandlerFactory.GetHandler( HandlerType.HITBOX_HANDLER );
-            hitboxHandler.Items.Add( new Hitbox( new Rectangle( 0, 0, 20, 20 ) ) );
+            //hitboxHandler.Items.Add( new Hitbox( new Rectangle( 0, 0, 20, 20 ) ) );
             foreach ( Hitbox h in hitboxHandler.Items ) {
                 Console.WriteLine( h );
             }

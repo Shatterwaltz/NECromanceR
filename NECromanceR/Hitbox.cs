@@ -7,16 +7,32 @@ using Microsoft.Xna.Framework;
 
 
 namespace NECromanceR {
-    public class Hitbox {
-        public Rectangle HitboxRect { get; set; }
+    public abstract class Hitbox {
+        public Point WorldCoords { get; set; }
 
-        public Hitbox(Rectangle hitboxRect) {
-            HitboxRect = hitboxRect;
+        protected Hitbox () {
+            WorldCoords = new Point( 0, 0 );
         }
 
-        public override string ToString () {
-            return string.Format( "[Hitbox: (X: {0}) (Y: {1}) (Width: {2}) (Height: {3})]", 
-                                  HitboxRect.X, HitboxRect.Y, HitboxRect.Width, HitboxRect.Height );
+        protected Hitbox ( Point worldCoords ) {
+            WorldCoords = worldCoords;
         }
+
+        protected Hitbox ( int x, int y ) {
+            WorldCoords = new Point( x, y );
+        }
+        //public Rectangle HitboxRect { get; set; }
+        //
+        //public Hitbox(Rectangle hitboxRect) {
+        //    HitboxRect = hitboxRect;
+        //}
+
+        //public override string ToString () {
+        //    return string.Format( "[Hitbox: (X: {0}) (Y: {1}) (Width: {2}) (Height: {3})]", 
+        //                          HitboxRect.X, HitboxRect.Y, HitboxRect.Width, HitboxRect.Height );
+        //}
+
+        public abstract bool CheckCollision ( CircularHitbox other );
+        public abstract bool CheckCollision ( RectangularHitbox other );
     }
 }

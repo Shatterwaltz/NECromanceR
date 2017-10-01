@@ -15,5 +15,13 @@ namespace NECromanceR {
             }
         }
 
+        public static Handler GetHandler ( HandlerType type, IList<object> items ) {
+            switch ( type ) {
+                case HandlerType.HITBOX_HANDLER:
+                    return new HitboxHandler( items );
+                default: return null;
+            }
+        }
+
     }
 }

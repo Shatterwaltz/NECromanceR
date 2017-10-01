@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace NECromanceR {
-    class Player {
+    public class Player {
 
         //Player spritesheet
         private Texture2D spriteSheet;

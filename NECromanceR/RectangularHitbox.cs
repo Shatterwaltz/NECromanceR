@@ -32,6 +32,9 @@ namespace NECromanceR {
             double distance = Math.Sqrt( Math.Pow( Box.X - other.WorldCoords.X, 2 ) + Math.Pow( Box.Y - other.WorldCoords.Y, 2 ) );
             // Need to find intersection between line and side of the calling RectangularHitbox
             // If distance between this point and the center of the CircularHitbox is less than the CircularHitbox's radius, there is a collision
+
+            // First, figure out which of the Rectangle's line segments
+
             return collision;
         }
 

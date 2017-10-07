@@ -14,7 +14,7 @@ namespace NECromanceR {
         }
 
         public RectangularHitbox ( Rectangle box ) : base( box.X, box.Y ) {
-
+            Box = box;
         }
 
         public RectangularHitbox ( int x, int y, int width, int height ) : base( x, y ) {

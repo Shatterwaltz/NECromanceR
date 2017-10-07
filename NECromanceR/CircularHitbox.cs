@@ -22,8 +22,7 @@ namespace NECromanceR {
         }
 
         public override bool CheckCollision ( CircularHitbox other ) {
-            // TODO
-            throw new NotImplementedException();
+            return Math.Sqrt( Math.Pow( WorldCoords.X - other.WorldCoords.X, 2 ) + Math.Pow( WorldCoords.Y - other.WorldCoords.Y, 2 ) ) < Radius + other.Radius;
         }
 
         public override bool CheckCollision ( RectangularHitbox other ) {

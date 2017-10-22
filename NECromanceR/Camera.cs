@@ -1,7 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using System; 
 namespace NECromanceR {
-    class Camera {
+    public class Camera {
         
         public Vector2 Position { get; set; }
         public Vector2 Viewport { get; set; }

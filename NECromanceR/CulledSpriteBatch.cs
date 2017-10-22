@@ -7,7 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace NECromanceR {
-    class CulledSpriteBatch: SpriteBatch {
+    public class CulledSpriteBatch: SpriteBatch {
         public CulledSpriteBatch(GraphicsDevice graphicsDevice) : base(graphicsDevice) {
         }
 

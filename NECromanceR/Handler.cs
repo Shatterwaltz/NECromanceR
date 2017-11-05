@@ -19,17 +19,6 @@ namespace NECromanceR {
         protected Handler ( IList<object> items ) {
             this.items = new List<object>( items );
         }
-
-        public override bool Equals ( object obj ) {
-            return base.Equals( obj );
-        }
-
-        public override int GetHashCode () {
-            return base.GetHashCode();
-        }
-
-        public override string ToString () {
-            return base.ToString();
-        }
+        
     }
 }

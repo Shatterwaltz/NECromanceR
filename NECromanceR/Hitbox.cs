@@ -10,6 +10,8 @@ namespace NECromanceR {
     public abstract class Hitbox {
         public Point WorldCoords { get; set; }
 
+        public HitboxType HitboxType { get; protected set; }
+
         protected Hitbox () {
             WorldCoords = new Point( 0, 0 );
         }
@@ -32,7 +34,10 @@ namespace NECromanceR {
         //                          HitboxRect.X, HitboxRect.Y, HitboxRect.Width, HitboxRect.Height );
         //}
 
-        public abstract bool CheckCollision ( CircularHitbox other );
-        public abstract bool CheckCollision ( RectangularHitbox other );
+        public abstract bool CheckCollision(Hitbox other);
+    }
+    public enum HitboxType {
+        RECTANGLE,
+        CIRCLE
     }
 }

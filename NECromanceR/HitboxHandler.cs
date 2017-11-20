@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace NECromanceR {
     public class HitboxHandler {
+        private static HitboxHandler instance = null;
+
         private Dictionary<string, HitboxInfo> hitboxes = new Dictionary<string, HitboxInfo>();
 
         public HitboxHandler() {
@@ -68,7 +70,14 @@ namespace NECromanceR {
             }
         }
 
+        public static HitboxHandler GetInstance() {
+            if(instance == null)
+                instance = new HitboxHandler();
+
+            return instance;
+        }   
     }
+
 
 
     //Contain reference to parent object and a list of hitboxes that relate to it

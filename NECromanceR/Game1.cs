@@ -10,7 +10,6 @@ namespace NECromanceR {
         GraphicsDeviceManager graphics;
         CulledSpriteBatch spriteBatch;
         Camera camera;
-        Handler hitboxHandler;
         Player player = new Player();
 
         public Game1() {
@@ -29,11 +28,7 @@ namespace NECromanceR {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            hitboxHandler = HandlerFactory.GetHandler( HandlerType.HITBOX_HANDLER );
-            //hitboxHandler.Items.Add( new Hitbox( new Rectangle( 0, 0, 20, 20 ) ) );
-            foreach ( Hitbox h in hitboxHandler.Items ) {
-                Console.WriteLine( h );
-            }
+            
             camera = new Camera(Vector2.Zero, new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
             player.Initialize(Content.Load<Texture2D>("MovePlaceholder"), camera);
             base.Initialize();

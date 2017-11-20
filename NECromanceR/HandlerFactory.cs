@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace NECromanceR {
     public static class HandlerFactory {
-
+        //Commented out for now, as HitboxHandler doesn't use Handler base class
+        /*
         public static Handler GetHandler ( HandlerType type ) {
             switch ( type ) {
                 case HandlerType.HITBOX_HANDLER:
@@ -22,6 +23,6 @@ namespace NECromanceR {
                 default: return null;
             }
         }
-
+        */
     }
 }

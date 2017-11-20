@@ -10,6 +10,7 @@ namespace NECromanceR {
     public abstract class Hitbox {
         public Point WorldCoords { get; set; }
 
+        //Identifies if hitbox is a rectangle or circle
         public HitboxType HitboxType { get; protected set; }
 
         protected Hitbox () {
@@ -23,11 +24,6 @@ namespace NECromanceR {
         protected Hitbox ( int x, int y ) {
             WorldCoords = new Point( x, y );
         }
-        //public Rectangle HitboxRect { get; set; }
-        //
-        //public Hitbox(Rectangle hitboxRect) {
-        //    HitboxRect = hitboxRect;
-        //}
 
         //public override string ToString () {
         //    return string.Format( "[Hitbox: (X: {0}) (Y: {1}) (Width: {2}) (Height: {3})]", 

@@ -8,34 +8,48 @@ namespace NECromanceR {
     public class HitboxHandler {
         private static HitboxHandler instance = null;
 
-        private Dictionary<string, HitboxInfo> hitboxes = new Dictionary<string, HitboxInfo>();
+        private Dictionary<string, List<Hitbox>> hitboxes = new Dictionary<string, List<Hitbox>>();
+        
 
         public HitboxHandler() {
 
         }
+        
+        
 
         /// <summary>
-        /// Add list of hitboxes to the handler.
+        /// Add hitbox to the handler.
         /// </summary>
-        /// <param name="parent">Parent entity</param>
-        /// <param name="hitboxes">List of hitboxes to add</param>
+        /// <param name="hitbox">Hitbox to add</param>
         /// <param name="tag">Tag to refer to the hitboxes. If tag already in use, hitboxes are appended to current entry.</param>
-        public void AddHitbox(Object parent, List<Hitbox> hitboxes, string tag) {
-            //If the tag already exists, add these hitboxes to the list. 
+        /// <returns>Id of the hitbox. Tag and Id are required to delete a hitbox.</returns>
+        public void AddHitbox(Hitbox hitbox, string tag) {
+            //If the tag already exists, add this hitbox to the list. 
             if(this.hitboxes.ContainsKey(tag)) {
-                foreach(Hitbox h in hitboxes)
-                    this.hitboxes[tag].Hitboxes.Add(h);
+                this.hitboxes[tag].Add(hitbox);
             } else {
-                //If tag doesn't exist, add it. 
-                this.hitboxes.Add(tag, new HitboxInfo(parent, hitboxes));
+                List<Hitbox> tmp = new List<Hitbox>();
+                tmp.Add(hitbox);
+                this.hitboxes.Add(tag, tmp);
             }
         }
+
+        /// <summary>
+        /// Searches for hitbox with matching id and tag, then deletes it. 
+        /// </summary>
+        /// <param name="hitbox">Hitbox to delete</param>
+        /// <param name="tag">Tag to search in</param>
+        /// <returns>True if successful, false if unsuccesful.</returns>
+        public bool DeleteHitbox(Hitbox hitbox, string tag) {
+            return hitboxes[tag].Remove(hitbox);
+        }
+
 
         /// <summary>
         /// Remove the specified entry from the HitboxHandler
         /// </summary>
         /// <param name="tag">tag of hitboxes to remove</param>
-        public void DeleteHitbox(string tag) {
+        public void DeleteHitboxGroup(string tag) {
             hitboxes.Remove(tag);
         }
 
@@ -47,28 +61,29 @@ namespace NECromanceR {
         public bool ContainsTag(string tag) {
             return hitboxes.ContainsKey(tag);
         }
-
+        
 
         /// <summary>
         /// Checks to see if any hitbox marked with tag1 is colliding with any hitbox marked with tag2
         /// </summary>
         /// <param name="tag1"></param>
         /// <param name="tag2"></param>
-        /// <returns></returns>
-        public bool IsColliding(string tag1, string tag2) {
+        /// <returns>Tuple of colliding hitboxes, or null if no collision</returns>
+        public Tuple<Hitbox, Hitbox> IsColliding(string tag1, string tag2) {
             if(ContainsTag(tag1) && ContainsTag(tag2)) {
-                foreach(Hitbox h1 in hitboxes[tag1].Hitboxes) {
-                    foreach(Hitbox h2 in hitboxes[tag2].Hitboxes) {
+                foreach(Hitbox h1 in hitboxes[tag1]) {
+                    foreach(Hitbox h2 in hitboxes[tag2]) {
                         if(h1.CheckCollision(h2)) {
-                            return true;
+                            return new Tuple<Hitbox, Hitbox>(h1, h2);
                         }
                     }
                 }
-                return false;
+                return null;
             } else {
-                return false;
+                return null;
             }
         }
+        
 
         public static HitboxHandler GetInstance() {
             if(instance == null)
@@ -77,17 +92,6 @@ namespace NECromanceR {
             return instance;
         }   
     }
-
-
-
-    //Contain reference to parent object and a list of hitboxes that relate to it
-    public class HitboxInfo {
-        public Object Parent { get; private set; }
-        public List<Hitbox> Hitboxes { get; private set; }
-
-        public HitboxInfo(Object parent, List<Hitbox> hitboxes) {
-            Parent = parent;
-            Hitboxes = hitboxes;
-        }
-    }
+    
+    
 }

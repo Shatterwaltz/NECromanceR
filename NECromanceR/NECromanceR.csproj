@@ -51,6 +51,7 @@
     <Compile Include="HandlerType.cs" />
     <Compile Include="Hitbox.cs" />
     <Compile Include="HitboxHandler.cs" />
+    <Compile Include="GameEntity.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

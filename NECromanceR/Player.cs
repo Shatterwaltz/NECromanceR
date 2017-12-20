@@ -5,8 +5,10 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 
 namespace NECromanceR {
-    public class Player {
+    public class Player : GameEntity{
 
+        //Position inherited from GameEntity class
+        
         //Player spritesheet
         private Texture2D spriteSheet;
         //Track keyboard
@@ -15,16 +17,24 @@ namespace NECromanceR {
         //Player's move speed
         private float speed;
         private Vector2 velocity;
-        //Player's position in world coordinates
-        public Vector2 Position;
+        
         private AnimationHandler animationHandler;
         private Camera camera;
 
+        private HitboxHandler hitHandler;
+
+
+        RectangularHitbox r;
         public void Initialize(Texture2D spriteSheet, Camera camera) {
             this.spriteSheet = spriteSheet;
             this.camera = camera;
+            //HITEXAMPLE: get hitboxhandler instance
+            hitHandler = HitboxHandler.GetInstance();
+            //HITEXAMPLE: define a hitbox, add to handler
+            r = new RectangularHitbox(this, Vector2.Zero, 32, 32);
+            hitHandler.AddHitbox(r, "player");
             speed = 5f;
-
+            
             //Set properties of each animation
             animationHandler = new AnimationHandler("Idle", spriteSheet, 0, 0, 32, 32, 30, 1f, true);
             animationHandler.AddAnimation("Left", spriteSheet, 7, 8, 32, 32, 500, 1f, true);
@@ -41,7 +51,7 @@ namespace NECromanceR {
             animationHandler.AddAnimation("HurtRight", spriteSheet, 10, 10, 32, 32, 300, 1f, false, 2, false, "Idle");
         }
 
-        public void Update(GameTime gameTime) {
+        public override void Update(GameTime gameTime) {
             prevKeyState = currentKeyState;
             currentKeyState = Keyboard.GetState();
 
@@ -98,9 +108,18 @@ namespace NECromanceR {
 
             //Update animation
             animationHandler.Update(gameTime);
+
+            //Update hitbox
+            r.Update(gameTime);
+            Console.WriteLine(r.WorldCoords + " " + r.Box.Width + " "+r.Box.Height);
+
+            //HITEXAMPLE: if player collides with a test hitbox, play the attack right animation
+            if(hitHandler.IsColliding("player", "test")!=null) {
+                animationHandler.PlayAnimation("AttackRight");
+            }
         }
 
-        public void Draw(CulledSpriteBatch spriteBatch) {
+        public override void Draw(CulledSpriteBatch spriteBatch) {
             animationHandler.Draw(spriteBatch, Position, camera);
         }
 

@@ -8,29 +8,41 @@ using Microsoft.Xna.Framework;
 
 namespace NECromanceR {
     public abstract class Hitbox {
-        public Point WorldCoords { get; set; }
+        //Parent object
+        public GameEntity parent;
+        //Describes position in relation to parent object
+        public Vector2 OffsetFromParent { get; set; }
+
+        public Vector2 WorldCoords { get; protected set; }
 
         //Identifies if hitbox is a rectangle or circle
         public HitboxType HitboxType { get; protected set; }
 
-        protected Hitbox () {
-            WorldCoords = new Point( 0, 0 );
+        protected Hitbox(){
+            WorldCoords = new Vector2(0, 0);
         }
 
-        protected Hitbox ( Point worldCoords ) {
+        protected Hitbox(Vector2 worldCoords) {
             WorldCoords = worldCoords;
         }
 
-        protected Hitbox ( int x, int y ) {
-            WorldCoords = new Point( x, y );
+        protected Hitbox(GameEntity parent) {
+            WorldCoords = parent.Position;
+            this.parent = parent;
         }
 
-        //public override string ToString () {
-        //    return string.Format( "[Hitbox: (X: {0}) (Y: {1}) (Width: {2}) (Height: {3})]", 
-        //                          HitboxRect.X, HitboxRect.Y, HitboxRect.Width, HitboxRect.Height );
-        //}
+        protected Hitbox(GameEntity parent, Vector2 offset) {
+            WorldCoords = parent.Position + offset;
+            this.parent = parent;
+            this.OffsetFromParent = offset;
+
+        }
+
+
 
         public abstract bool CheckCollision(Hitbox other);
+
+        public abstract void Update(GameTime gameTime);
     }
     public enum HitboxType {
         RECTANGLE,

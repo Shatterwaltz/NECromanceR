@@ -9,14 +9,28 @@ namespace NECromanceR {
     public class CircularHitbox: Hitbox {
         public float Radius { get; set; }
 
-        public CircularHitbox(Point worldCoords, float radius) : base(worldCoords) {
+        public CircularHitbox(Vector2 worldCoords, float radius) : base(worldCoords) {
             HitboxType = HitboxType.CIRCLE;
             Radius = radius;
+            WorldCoords = worldCoords;
         }
 
-        public CircularHitbox(int x, int y, float radius) : base(x, y) {
+        public CircularHitbox(int x, int y, float radius) : base(new Vector2(x, y)) {
             HitboxType = HitboxType.CIRCLE;
             Radius = radius;
+            WorldCoords = WorldCoords;
+        }
+
+        /// <summary>
+        /// create a circular hitbox attached to parent, positioned at parent position plus offset. 
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="offset"></param>
+        /// <param name="radius"></param>
+        public CircularHitbox(GameEntity parent, Vector2 offset, float radius) : base(parent, offset) {
+            HitboxType = HitboxType.CIRCLE;
+            Radius = radius;
+            WorldCoords = parent.Position + offset;
         }
 
         public override bool CheckCollision(Hitbox other) {
@@ -50,6 +64,11 @@ namespace NECromanceR {
         public override string ToString() {
             return string.Format("[CircularHitbox: (X: {0}) (Y: {1}) (Radius: {3})]",
                                   WorldCoords.X, WorldCoords.Y, Radius);
+        }
+
+        public override void Update(GameTime gameTime) {
+            //Move hitbox with parent object
+            WorldCoords = parent.Position + OffsetFromParent;
         }
     }
 }

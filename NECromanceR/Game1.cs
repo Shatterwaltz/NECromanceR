@@ -28,7 +28,13 @@ namespace NECromanceR {
         /// </summary>
         protected override void Initialize() {
             // TODO: Add your initialization logic here
-            
+
+            //HITEXAMPLE: Grab handler instance
+            HitboxHandler hithandle = HitboxHandler.GetInstance();
+            //HITEXAMPLE: add two hitboxes under the tag "test"
+            hithandle.AddHitbox(new RectangularHitbox(50,0,50,50), "test");
+            hithandle.AddHitbox(new CircularHitbox(200, 200, 10), "test");
+
             camera = new Camera(Vector2.Zero, new Vector2(GraphicsDevice.Viewport.Width, GraphicsDevice.Viewport.Height));
             player.Initialize(Content.Load<Texture2D>("MovePlaceholder"), camera);
             base.Initialize();
@@ -61,6 +67,11 @@ namespace NECromanceR {
             if(GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             player.Update(gameTime);
+
+            //HITEXAMPLE: Check if any hitbox from player is colliding with a hitbox from circle. If this occurs, delete the colliding box from circle.
+            Tuple<Hitbox, Hitbox> pair = HitboxHandler.GetInstance().IsColliding("player", "test");
+            if(pair != null)
+                HitboxHandler.GetInstance().DeleteHitbox(pair.Item2, "test");
             // TODO: Add your update logic here
             base.Update(gameTime);
         }

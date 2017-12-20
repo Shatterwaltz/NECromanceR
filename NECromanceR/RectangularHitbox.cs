@@ -7,18 +7,32 @@ using System.Threading.Tasks;
 
 namespace NECromanceR {
     public class RectangularHitbox: Hitbox {
-        public Rectangle Box { get; set; }
+        public Rectangle Box { get; protected set; }
 
-        public RectangularHitbox(Rectangle box) : base(box.X, box.Y) {
+        public RectangularHitbox(Rectangle box) : base(new Vector2(box.X, box.Y)) {
             HitboxType = HitboxType.RECTANGLE;
             Box = box;
+            WorldCoords = new Vector2((int)Box.Location.X, (int)Box.Location.Y);
         }
 
-        public RectangularHitbox(int x, int y, int width, int height) : base(x, y) {
+        public RectangularHitbox(int x, int y, int width, int height) : base(new Vector2(x, y)) {
             HitboxType = HitboxType.RECTANGLE;
             Box = new Rectangle(x, y, width, height);
+            WorldCoords = new Vector2((int)Box.Location.X, (int)Box.Location.Y);
         }
 
+        /// <summary>
+        /// Create rectangular hitbox attached to parent, positioned at parent's position+offset. 
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="offset"></param>
+        /// <param name="width"></param>
+        /// <param name="height"></param>
+        public RectangularHitbox(GameEntity parent, Vector2 offset, int width, int height) : base(parent, offset) {
+            HitboxType = HitboxType.RECTANGLE;
+            WorldCoords = parent.Position + offset;
+            Box = new Rectangle((int)parent.Position.X, (int)parent.Position.Y, width, height);
+        }
         /// <summary>
         /// Accepts a generic Hitbox and returns boolean indicating intersection with this hitbox. 
         /// </summary>
@@ -66,6 +80,14 @@ namespace NECromanceR {
         public override string ToString() {
             return string.Format("[RectangularHitbox: (X: {0}) (Y: {1}) (Width: {3}) (Height: {4})]",
                                   WorldCoords.X, WorldCoords.Y, Box.Width, Box.Height);
+        }
+
+        public override void Update(GameTime gameTime) {
+            //Move hitbox with parent object
+            WorldCoords = parent.Position + OffsetFromParent;
+            Rectangle tmpBox = Box;
+            tmpBox.Location = new Point((int)WorldCoords.X, (int)WorldCoords.Y);
+            Box = tmpBox;
         }
     }
 }

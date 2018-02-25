@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace NECromanceR {
     public class RectangularHitbox: Hitbox {
-        public Rectangle Box { get; protected set; }
+        public Rectangle Box { get; set; }
 
         public RectangularHitbox(Rectangle box) : base(new Vector2(box.X, box.Y)) {
             HitboxType = HitboxType.RECTANGLE;
@@ -31,7 +31,7 @@ namespace NECromanceR {
         public RectangularHitbox(GameEntity parent, Vector2 offset, int width, int height) : base(parent, offset) {
             HitboxType = HitboxType.RECTANGLE;
             WorldCoords = parent.Position + offset;
-            Box = new Rectangle((int)parent.Position.X, (int)parent.Position.Y, width, height);
+            Box = new Rectangle((int)WorldCoords.X, (int) WorldCoords.Y, width, height);
         }
         /// <summary>
         /// Accepts a generic Hitbox and returns boolean indicating intersection with this hitbox. 
